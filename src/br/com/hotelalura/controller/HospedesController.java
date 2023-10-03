@@ -34,7 +34,7 @@ public class HospedesController {
 	}
 	
 	public void excluirHospede(Integer reservaId) {
-		this.hospedesDao.excluirHospede(reservaId);
+		this.hospedesDao.deletarHospede(reservaId);
 	}
 
 	public void setVisible(boolean b) {

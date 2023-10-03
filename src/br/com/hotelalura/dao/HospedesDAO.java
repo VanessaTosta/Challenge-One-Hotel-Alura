@@ -94,7 +94,7 @@ public class HospedesDAO {
 	}
 	
 
-	public void excluirHospede(Integer reservaId)  {
+	public void deletarHospede(Integer reservaId)  {
 	 try {
 			try (PreparedStatement stm = connection.prepareStatement("DELETE FROM HOSPEDES WHERE ID = ?")) {
 				stm.setInt(1, reservaId);

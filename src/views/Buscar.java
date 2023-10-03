@@ -349,14 +349,14 @@ public class Buscar extends JFrame {
 						mostrarTabelaDeReservas();
 						mostrarTabelaDeHospedes();
 					}
-				}else if(filaHospedes >= 0){
-					hospede = tbHospedes.getValueAt(registroReservas,0).toString();
+				} 
+				if(filaHospedes >= 0){
+					hospede = tbHospedes.getValueAt(filaHospedes,0).toString();
 					int confirma = JOptionPane.showConfirmDialog(null,"Deseja excluir esse(s) dado(s)?");
 					if(confirma == JOptionPane.YES_OPTION) {
 						String hospede = tbHospedes.getValueAt(filaHospedes, 0).toString();
 						hospedeController.excluirHospede(Integer.valueOf(hospede));
 						JOptionPane.showMessageDialog(contentPane, "Dado(s) excluído(s) com sucesso!");
-						editarRegistroReservas();
 						limpaTela();
 						mostrarTabelaDeHospedes();
 						mostrarTabelaDeReservas();
