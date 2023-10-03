@@ -8,6 +8,7 @@ import java.awt.Panel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -73,11 +74,11 @@ public class MenuPrincipal extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 500, 910, 37);
-		panel_1.setBackground(new Color(12, 138, 199));
+		panel_1.setBackground(new Color(75, 0, 130));
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblCopyR = new JLabel("Desenvolvido por Fulanita de Tal © 2023");
+		JLabel lblCopyR = new JLabel("Desenvolvido por Vanessa Tosta © 2023");
 		lblCopyR.setBounds(315, 11, 301, 19);
 		lblCopyR.setForeground(new Color(240, 248, 255));
 		lblCopyR.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -108,11 +109,16 @@ public class MenuPrincipal extends JFrame {
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				int confirmar = JOptionPane.showConfirmDialog(null, "Deseja sair da página?");
+				if(confirmar == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+				
+				
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
+				btnexit.setBackground(new Color(87, 0, 157));
 				labelExit.setForeground(Color.white);
 			}			
 			@Override
@@ -160,7 +166,7 @@ public class MenuPrincipal extends JFrame {
 		lblTitulo.setBackground(SystemColor.window);
 		panel.add(lblTitulo);
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setForeground(SystemColor.textHighlight);
+		lblTitulo.setForeground(new Color(75, 0, 130));
 		lblTitulo.setFont(new Font("Roboto Light", Font.PLAIN, 20));
 	}
 	

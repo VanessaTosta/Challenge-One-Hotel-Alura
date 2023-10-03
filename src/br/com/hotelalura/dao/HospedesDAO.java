@@ -1,13 +1,16 @@
+
+
 package br.com.hotelalura.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import br.com.hotelalura.modelo.Hospedes;
 
 public class HospedesDAO {
@@ -22,17 +25,19 @@ public class HospedesDAO {
 		
 		try {
 			
-			String sql = "INSERT INTO HOSPEDES (NOME, SOBRENOME, DATANASCIMENTO, NACIONALIDADE, TELEFONE"
-					+ "RESERVA_ID ) VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO HOSPEDES (NOME, SOBRENOME, DOCUMENTOS, DATANASCIMENTO, NACIONALIDADE, TELEFONE,"
+					+ "RESERVA_ID ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			
 
 			try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 				pstm.setString(1, hospede.getNome());
 				pstm.setString(2, hospede.getSobrenome());
-				pstm.setDate(3, hospede.getDatanascimento());
-				pstm.setString(4, hospede.getNacionalidade());
-				pstm.setString(5, hospede.getTelefone());
-				pstm.setInt(6, hospede.getReservaId());
+				pstm.setString(3, hospede.getDocumentos());
+				pstm.setObject(4, hospede.getDataNascimento());
+				pstm.setString(5, hospede.getNacionalidade());
+				pstm.setString(6, hospede.getTelefone());
+				pstm.setInt(7, hospede.getReservaId());
+				
 
 				pstm.execute();
 
@@ -52,8 +57,7 @@ public class HospedesDAO {
 		
 		 try {	
 			 List<Hospedes> hospede = new ArrayList<Hospedes>();
-			 String sql = "SELECT ID, NOME, SOBRENOME, DATANASCIMENTO, NACIONALIDADE, TELEFONE"
-			 		+ "RESERVA_ID FROM HOSPEDES";
+			 String sql = "SELECT * FROM HOSPEDES";
 
 			 try (PreparedStatement pstm = connection.prepareStatement(sql)) {
 				 pstm.execute();
@@ -66,78 +70,100 @@ public class HospedesDAO {
 			}
 		}
 	
-	public void editarDadosHospedes (String nome, String sobrenome,Date dataNascimento,String nacionalidade,
-			String telefone){
+	
+	public List<Hospedes> buscarDadosHospedes(String buscar) {
+		
+		List<Hospedes> hospede = new ArrayList<Hospedes>();
+		try {	
+			 
+			 String sql = "SELECT * FROM HOSPEDES WHERE RESERVA_ID = ? OR SOBRENOME LIKE ? OR NOME LIKE ? OR NACIONALIDADE = ?";
+
+			 try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+				 pstm.setString(1, buscar);
+				 pstm.setString(2, buscar + '%');
+				 pstm.setString(3, buscar + '%');
+				 pstm.setString(4, buscar);
+				 pstm.execute();
+
+				 trasformarResultSetEmHospedes(hospede, pstm);
+			 }
+			 	return hospede;
+		  }catch(SQLException e) {
+				throw new RuntimeException(e);
+			}
+	}
+	
+
+	public void excluirHospede(Integer reservaId)  {
+	 try {
+			try (PreparedStatement stm = connection.prepareStatement("DELETE FROM HOSPEDES WHERE ID = ?")) {
+				stm.setInt(1, reservaId);
+				stm.execute();
+			}
+	 }catch(SQLException e) {
+			throw new RuntimeException(e);
+	  }
+	}
+	
+	
+	private void trasformarResultSetEmHospedes(List<Hospedes> hospede, PreparedStatement pstm) {
+			
+		try (ResultSet rst = pstm.executeQuery()) {
+				while (rst.next()) {
+					int id = rst.getInt("id");
+					String nome = rst.getString("nome");
+					String sobrenome = rst.getString("sobrenome");
+					String documentos= rst.getString("documentos");
+					LocalDate dataNascimento = rst.getDate("dataNascimento").toLocalDate().plusDays(1);
+					String nacionalidade = rst.getString("nacionalidade");
+					String telefone = rst.getString("telefone");
+					int reservaId = rst.getInt("reserva_Id");
+					
+					
+					Hospedes hospedes= new Hospedes(id,nome,sobrenome,documentos,dataNascimento,nacionalidade,telefone,reservaId);
+					hospede.add(hospedes);
+				}		
+			}catch(SQLException e) {
+			throw new RuntimeException(e);
+			}
+			
+	}
+
+	public void editarHospedes(String nome, String sobrenome, String documentos, LocalDate dataNascimento, String nacionalidade,
+			String telefone, Integer reservaId, Integer id) {
 		try {
 			try (PreparedStatement stm = connection
-					.prepareStatement("UPDATE HOSPEDES H SET H.NOME = ?, H.SOBRENOME = ?, H.DATANASCIMENTO = ?,"
-							+ "H.NACIONALIDADE = ?, H.TELEFONE = ? WHERE RESERVA_ID = ?")) {
+					.prepareStatement("UPDATE HOSPEDES SET NOME = ?, SOBRENOME = ?, DOCUMENTOS = ?, DATANASCIMENTO = ?,"
+							+ "NACIONALIDADE = ?, TELEFONE = ?, RESERVA_ID = ? WHERE ID = ?")) {
 				stm.setString(1, nome);
 				stm.setString(2, sobrenome);
-				stm.setDate(3, dataNascimento );
-				stm.setString(4, nacionalidade);
-				stm.setString(5, telefone);
+				stm.setString(3, documentos);
+				stm.setObject(4, dataNascimento );
+				stm.setString(5, nacionalidade);
+				stm.setString(6, telefone);
+				stm.setInt(7, reservaId);
+				stm.setInt(8, id);
+				
 
 				stm.execute();
 			}
 		}catch(SQLException e) {
 			throw new RuntimeException(e);
 		}
-	}
-	
-	public void excluirHospede(Integer reservaId)  {
-		 try {
-	 		try (PreparedStatement stm = connection.prepareStatement("DELETE FROM HOSPEDES WHERE RESERVA_ID = ?")) {
-	 			stm.setInt(1, reservaId);
-	 			stm.execute();
-	 		}
-		 }catch(SQLException e) {
-				throw new RuntimeException(e);
-		  }
-	}
-	
-	public List<Hospedes> buscarHospedes(Hospedes h){
 		
-		 try{
-			List<Hospedes> hospede = new ArrayList<Hospedes>();
-			String sql = "SELECT ID, NOME, SOBRENOME, DATANASCIMENTO, NACIONALIDADE,"
-					+ "TELEFONE,RESERVA_ID FROM HOSPEDES WHERE ? = ?";
-			
-			try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-				pstm.setInt(1, h.getId());
-				pstm.setString(2, h.getNome());
-				pstm.setString(3, h.getSobrenome());
-				pstm.setDate(4, h.getDatanascimento());
-				pstm.setString(5, h.getNacionalidade());
-				pstm.setString(6, h.getTelefone());
-				pstm.setInt(7, h.getReservaId());
-				pstm.execute();
-
-				trasformarResultSetEmHospedes(hospede, pstm);
-			}
-			return hospede;
-		 }catch(SQLException e) {
-				throw new RuntimeException(e);
-			}
-		 
-	}
-
-	
-
-	private void trasformarResultSetEmHospedes(List<Hospedes> hospede, PreparedStatement pstm) {
-		
-		try {
-			try (ResultSet rst = pstm.getResultSet()) {
-				while (rst.next()) {
-					Hospedes hospedes = new Hospedes(rst.getInt(1), rst.getString(2), rst.getString(3),rst.getDate(4),
-							rst.getString(5), rst.getString(6), rst.getInt(7));
-
-					hospede.add( hospedes);
-				}
-			}
-		}catch(SQLException e) {
-			throw new RuntimeException(e);
-		}	
 	}
 	
 }
+	
+	
+ 
+	
+	
+	
+
+	
+
+
+	
+	
+

@@ -1,13 +1,15 @@
 package views;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import br.com.hotelalura.controller.LoginController;
 import java.awt.Color;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import java.awt.SystemColor;
@@ -68,7 +70,7 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(12, 138, 199));
+		panel_1.setBackground(new Color(75, 0, 130));
 		panel_1.setBounds(484, 0, 304, 527);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
@@ -88,16 +90,16 @@ public class Login extends JFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
+				btnexit.setBackground(new Color(87, 0, 157));
 				labelExit.setForeground(Color.white);
 			}			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				 btnexit.setBackground(new Color(12, 138, 199));
+				 btnexit.setBackground(new Color(75, 0, 130));
 			     labelExit.setForeground(Color.white);
 			}
 		});
-		btnexit.setBackground(new Color(12, 138, 199));
+		btnexit.setBackground(new Color(75, 0, 130));
 		btnexit.setLayout(null);
 		btnexit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
@@ -131,18 +133,18 @@ public class Login extends JFrame {
 		txtUsuario.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBackground(new Color(0, 120, 215));
+		separator.setBackground(new Color(115, 0, 200));
 		separator.setBounds(65, 292, 324, 2);
 		panel.add(separator);
 		
 		JLabel labelTitulo = new JLabel("LOGIN");
-		labelTitulo.setForeground(SystemColor.textHighlight);
+		labelTitulo.setForeground(new Color(75,0,130));
 		labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
 		labelTitulo.setBounds(196, 150, 89, 26);
 		panel.add(labelTitulo);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBackground(SystemColor.textHighlight);
+		separator_1.setBackground(new Color(115, 0, 200));
 		separator_1.setBounds(65, 393, 324, 2);
 		panel.add(separator_1);
 		
@@ -168,34 +170,34 @@ public class Login extends JFrame {
 		panel.add(txtSenha);
 		
 		JLabel LabelUsuario = new JLabel("USUARIO");
-		LabelUsuario.setForeground(SystemColor.textInactiveText);
+		LabelUsuario.setForeground(new Color(75, 0, 130));
 		LabelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		LabelUsuario.setBounds(65, 219, 107, 26);
 		panel.add(LabelUsuario);
 		
 		JLabel lblSenha = new JLabel("SENHA");
-		lblSenha.setForeground(SystemColor.textInactiveText);
+		lblSenha.setForeground(new Color(75, 0, 130));
 		lblSenha.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		lblSenha.setBounds(65, 316, 140, 26);
 		panel.add(lblSenha);
 		
-		JPanel btnLogin = new JPanel();
+		//JPanel btnLogin = new JPanel();
+		
+		JButton btnLogin = new JButton();
+				btnLogin.addActionListener(new LoginController(this));
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogin.setBackground(new Color(0, 156, 223));
+				btnLogin.setBackground(new Color(87, 0, 157));
 			}
 		
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLogin.setBackground(SystemColor.textHighlight);
+				btnLogin.setBackground(new Color(87, 0, 157) );
 			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Login();
-			}
+			
 		});
-		btnLogin.setBackground(SystemColor.textHighlight);
+		btnLogin.setBackground(new Color(75, 0, 130));
 		btnLogin.setBounds(65, 431, 122, 44);
 		panel.add(btnLogin);
 		btnLogin.setLayout(null);
@@ -234,20 +236,16 @@ public class Login extends JFrame {
 		header.setLayout(null);
 	}
 	
-	private void Login() {
-		 String Usuario= "admin";
-	     String Senha="admin";
-
-	        String senhaa=new String (txtSenha.getPassword());
-
-	        if(txtUsuario.getText().equals(Usuario) && senhaa.equals(Senha)){
-	            MenuUsuario menu = new MenuUsuario();
-	            menu.setVisible(true);
-	            dispose();	 
-	        }else {
-	            JOptionPane.showMessageDialog(this, "Usuario ou Senha não válidos");
-	        }
-	} 
+	
+	
+	
+	public String getNome() {
+		return txtUsuario.getText();
+	}
+	
+	public String getSenha() {
+		return new String(txtSenha.getPassword());
+	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {

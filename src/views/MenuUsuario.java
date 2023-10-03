@@ -1,25 +1,22 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionListener;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
-import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.awt.SystemColor;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class MenuUsuario extends JFrame {
@@ -76,7 +73,7 @@ public class MenuUsuario extends JFrame {
 		});
 		
 		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(new Color(12, 138, 199));
+		panelMenu.setBackground(new Color(75, 0, 130));
 		panelMenu.setBounds(0, 0, 257, 609);
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(null);
@@ -85,11 +82,11 @@ public class MenuUsuario extends JFrame {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnBuscar.setBackground(new Color(118, 187, 223));				
+				btnBuscar.setBackground(new Color(87, 0, 157));				
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnBuscar.setBackground(new Color(12, 138, 199));	
+				btnBuscar.setBackground(new Color(75, 0, 130));	
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -100,7 +97,7 @@ public class MenuUsuario extends JFrame {
 		});
 		
 		btnBuscar.setBounds(0, 312, 257, 56);
-		btnBuscar.setBackground(new Color(12, 138, 199));
+		btnBuscar.setBackground(new Color(75, 0, 130));
 		btnBuscar.setLayout(null);
 		btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panelMenu.add(btnBuscar);
@@ -122,11 +119,11 @@ public class MenuUsuario extends JFrame {
 		btnRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnRegistro.setBackground(new Color(118, 187, 223));				
+				btnRegistro.setBackground(new Color(87, 0, 157));				
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnRegistro.setBackground(new Color(12, 138, 199));	
+				btnRegistro.setBackground(new Color(75, 0, 130));	
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,7 +133,7 @@ public class MenuUsuario extends JFrame {
 			}
 		});
 		btnRegistro.setBounds(0, 255, 257, 56);
-		btnRegistro.setBackground(new Color(12, 138, 199));
+		btnRegistro.setBackground(new Color(75, 0, 130));
 		panelMenu.add(btnRegistro);
 		btnRegistro.setLayout(null);
 		btnRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -165,7 +162,7 @@ public class MenuUsuario extends JFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
+				btnexit.setBackground(new Color(87, 0, 157));
 				labelExit.setForeground(Color.white);
 			}
 			@Override
@@ -187,7 +184,7 @@ public class MenuUsuario extends JFrame {
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		
 	    JPanel panelFecha = new JPanel();
-	    panelFecha.setBackground(new Color(118, 187, 223));
+	    panelFecha.setBackground(new Color(75, 0, 130));
 	    panelFecha.setBounds(256, 84, 688, 121);
 	    contentPane.add(panelFecha);
 	    panelFecha.setLayout(null);
@@ -199,7 +196,7 @@ public class MenuUsuario extends JFrame {
 	    lblTituloPrincipal.setFont(new Font("Roboto", Font.PLAIN, 24));
 	    
 	    JLabel labelFecha = new JLabel("New label");
-	    labelFecha.setBounds(35, 64, 294, 36);
+	    labelFecha.setBounds(213, 64, 294, 36);
 	    panelFecha.add(labelFecha);
 	    labelFecha.setForeground(Color.WHITE);
 	    labelFecha.setFont(new Font("Roboto", Font.PLAIN, 33));
